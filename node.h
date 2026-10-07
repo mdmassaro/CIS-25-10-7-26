@@ -1,7 +1,5 @@
 class Node {
-  private:
+  public:
     int value;
     Node *next;
-  public:
-    Node(int v, Node *ptr);
 };
