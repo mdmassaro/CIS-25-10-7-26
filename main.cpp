@@ -17,17 +17,40 @@ int totalReadings(const Node* head) {
     return total;
 }
 
+// function does not change original list
+void addReadingBroken(Node* head, int value) {
+    Node* node = new Node;
+    node->value = value;
+    node->next = head;
+    head = node;        // changes only this function's copy of head
+}
+
+Node* addReading(Node* head, int value) {
+    Node* node = new Node;
+    node->value = value;
+    node->next = head;
+    return node;        // the new node is the new head
+}
+
+void deleteReadings(Node* head) {
+    while (head != nullptr) {
+        Node* following = head->next;   // save the next address first
+        delete head;                    // delete dynamic memory of first node in list
+        head = following;
+    }
+}
+
 int main(){
   Node firstItemInList(5, nullptr);
   int array[1] = {5};
 
   Node* fourth = new Node;
   fourth->value = 8;
-  fourth->next = nullptr;
+  fourth->next = nullptr;    // nothing comes after this node
 //create list {8}
   Node* third = new Node;
   third->value = 2;
-  third->next = fourth;      // nothing comes after this node
+  third->next = fourth;      
 //create list of {2, 8}
   Node* second = new Node;
   second->value = 9;
@@ -50,7 +73,15 @@ int main(){
   // use function to run through list values
   printReadings(head);
   cout << "Total value of linked list is: " << totalReadings(head) << endl;
-  
+
+    // create new list using function
+  Node* newHead = nullptr;
+  newHEad = addReading(newHead, 8);
+  newHead = addReading(newHead, 2);
+  newHead = addReading(newHead, 9);
+  newHead = addReading(newHead, 5);
+  printReadings(newHead);
+    
   // after making head point to all of linked list we delete the dynamic memory for creating nodes
   delete first;
   delete second;
@@ -61,6 +92,9 @@ int main(){
   third = nullptr;
   fourth = nullptr;
   head = nullptr;
+  // deletes dynamic memory created from addReading function calls
+  deleteReading(newHead);
+  newHead = nullptr;
 
   return 0
 }
